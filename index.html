@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Pour Cavé</title>
+<meta name="description" content="Un site, pour toi seul.">
+
+<meta property="og:title" content="Pour Cavé">
+<meta property="og:description" content="Aujourd'hui est à toi.">
+<meta property="og:type" content="website">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌙</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="pages" id="pages">
+
+  <!-- ============ PAGE 0 — OUVERTURE ============ -->
+  <section class="page" id="page-hero" data-page="0">
+    <div class="hero__moon" aria-hidden="true"></div>
+    <div class="page__inner page__inner--center">
+      <p class="eyebrow" id="heroEyebrow">pour toi</p>
+      <h1 class="hero__name" id="heroName">CAVÉ</h1>
+      <p class="hero__line" id="heroLine1">Aujourd'hui est à toi.</p>
+      <p class="hero__line hero__line--accent" id="heroLine2">Et j'ai quelque chose à te montrer.</p>
+      <button class="btn-enter" id="enterBtn" hidden>
+        <span>Entrer</span><span class="btn-enter__arrow">→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ PAGE 1 — QUI TU ES (portrait, cartes à retourner) ============ -->
+  <section class="page" id="page-toi" data-page="1">
+    <div class="page__inner">
+      <p class="eyebrow">qui tu es</p>
+      <h2 class="page__title">Toi</h2>
+      <p class="page__hint">Touche la carte pour découvrir.</p>
+
+      <div class="flip-card" id="flipCard">
+        <div class="flip-card__inner" id="flipCardInner">
+          <div class="flip-card__face flip-card__face--front">
+            <span class="flip-card__index" id="loveIndex">01</span>
+            <span class="flip-card__title" id="loveTitle">Ton cœur</span>
+          </div>
+          <div class="flip-card__face flip-card__face--back">
+            <p class="flip-card__desc" id="loveDesc"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-deck__nav">
+        <button class="deck-arrow" id="lovePrev" aria-label="Précédent">‹</button>
+        <span class="deck-count" id="loveCount">1 / 1</span>
+        <button class="deck-arrow" id="loveNext" aria-label="Suivant">›</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PAGE 2 — TES SOUVENIRS (carrousel) ============ -->
+  <section class="page" id="page-souvenirs" data-page="2">
+    <div class="page__inner">
+      <p class="eyebrow">des instants avec toi</p>
+      <h2 class="page__title">Souvenirs</h2>
+
+      <div class="carousel" id="memoryCarousel">
+        <button class="carousel__arrow carousel__arrow--prev" id="memPrev" aria-label="Photo précédente">‹</button>
+        <div class="carousel__frame">
+          <img class="carousel__img" id="memImg" src="" alt="">
+          <p class="carousel__caption" id="memCaption"></p>
+        </div>
+        <button class="carousel__arrow carousel__arrow--next" id="memNext" aria-label="Photo suivante">›</button>
+      </div>
+      <div class="carousel__dots" id="memDots"></div>
+    </div>
+  </section>
+
+  <!-- ============ PAGE 3 — LE SECRET / LA LETTRE ============ -->
+  <section class="page page--dark" id="page-secret" data-page="3">
+    <div class="page__inner page__inner--center" id="secretLocked">
+      <p class="eyebrow">pour toi seul</p>
+      <p class="secret__line">Il y a quelque chose que je ne t'ai pas encore dit…</p>
+      <p class="secret__line secret__line--accent">Mais il te faudra une clé.</p>
+      <form class="secret__form" id="secretForm" autocomplete="off">
+        <input type="text" id="secretInput" class="secret__input" placeholder="Entre le code" aria-label="Code secret">
+        <button type="submit" class="secret__submit">Déverrouiller</button>
+      </form>
+      <p class="secret__feedback" id="secretFeedback" aria-live="polite"></p>
+    </div>
+
+    <div class="page__inner page__inner--center" id="letterUnlocked" hidden>
+      <div class="letter__unlock-flash" id="unlockFlash" aria-hidden="true"></div>
+      <p class="letter__paragraph" id="letterText"></p>
+      <p class="letter__signoff" id="letterSignoff" hidden>Joyeux anniversaire, Cavounet D'amour</p>
+      <button class="btn-ghost" id="continueAfterLetter" hidden>Continuer</button>
+    </div>
+  </section>
+
+  <!-- ============ PAGE 4 — LE TWIST ============ -->
+  <section class="page page--dark" id="page-twist" data-page="4" hidden>
+    <div class="page__inner page__inner--center" id="twistSequence">
+      <p class="eyebrow">encore un instant</p>
+      <p class="twist__line" data-order="1">Tu pensais que c'était ça, le cadeau ?</p>
+      <p class="twist__line" data-order="2">Pas tout à fait.</p>
+      <p class="twist__line" data-order="3">Il reste encore un chapitre à écrire.</p>
+      <p class="twist__line twist__line--whisper" data-order="4">Il y a un endroit qui nous a vus maladroits, avant de nous voir amoureux.</p>
+    </div>
+
+    <div class="page__inner page__inner--center" id="twistMeet" hidden>
+      <p class="twist__time">17:00</p>
+      <p class="twist__line">On se retrouve là-bas.</p>
+      <div class="countdown" id="countdown">
+        <div class="countdown__unit"><span id="cdHours">00</span><small>heures</small></div>
+        <div class="countdown__unit"><span id="cdMinutes">00</span><small>minutes</small></div>
+        <div class="countdown__unit"><span id="cdSeconds">00</span><small>secondes</small></div>
+      </div>
+      <p class="countdown__done" id="countdownDone" hidden>C'est l'heure.</p>
+    </div>
+  </section>
+
+  <!-- ============ PAGE 5 — BONUS (désactivée par défaut) ============ -->
+  <section class="page" id="page-bonus" data-page="5" hidden>
+    <div class="page__inner">
+      <p class="eyebrow">et la suite</p>
+      <h2 class="page__title">Ton anniversaire</h2>
+      <div class="carousel" id="bonusCarousel">
+        <button class="carousel__arrow carousel__arrow--prev" id="bonusPrev" aria-label="Photo précédente">‹</button>
+        <div class="carousel__frame">
+          <img class="carousel__img" id="bonusImg" src="" alt="">
+          <p class="carousel__caption" id="bonusCaption"></p>
+        </div>
+        <button class="carousel__arrow carousel__arrow--next" id="bonusNext" aria-label="Photo suivante">›</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Navigation par points -->
+<nav class="page-dots" id="pageDots" aria-label="Navigation entre les pages"></nav>
+
+<!-- Flèches globales -->
+<button class="page-next page-next--prev" id="globalPrev" aria-label="Page précédente" hidden>↑</button>
+<button class="page-next" id="globalNext" aria-label="Page suivante">↓</button>
+
+<button class="music-toggle" id="musicToggle" aria-pressed="false" aria-label="Activer la musique">♫</button>
+<audio id="bgMusic" loop preload="none">
+  <source src="audio.mp3" type="audio/mpeg">
+</audio>
+
+<!-- La porte : question de passage avant chaque nouvelle page -->
+<div class="gate" id="gate" aria-hidden="true">
+  <div class="gate__card">
+    <p class="gate__eyebrow">Pour continuer</p>
+    <p class="gate__question" id="gateQuestion"></p>
+    <div class="gate__options" id="gateOptions"></div>
+    <p class="gate__feedback" id="gateFeedback" aria-live="polite"></p>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

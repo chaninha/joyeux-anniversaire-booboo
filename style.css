@@ -1,0 +1,598 @@
+/* =========================================================
+   FOR CAVÉ — style.css
+   Pages plein écran qui s'enchaînent (scroll-snap), design épuré.
+   ========================================================= */
+
+:root{
+  /* Palette épurée : noir graphite, blanc cassé, un seul accent doré,
+     un gris neutre pour les états secondaires/erreurs. */
+  --noir: #0A0A0B;
+  --noir-soft: #131315;
+  --ivoire: #F4F1EC;
+  --gris: #6E6F73;
+  --accent: #C6A96B;
+  --erreur: #8A5A4A;
+
+  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-body: 'Jost', 'Helvetica Neue', sans-serif;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.75rem;
+  --space-4: 2.75rem;
+
+  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-med: 0.6s;
+  --dur-fast: 0.3s;
+
+  --max-w: 560px;
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+
+html, body{ height: 100%; margin: 0; }
+
+body{
+  background: var(--noir);
+  color: var(--ivoire);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+h1, h2{ font-family: var(--font-display); font-weight: 500; margin: 0; }
+p{ margin: 0; }
+button{ font-family: var(--font-body); cursor: pointer; }
+img{ max-width: 100%; display: block; }
+
+/* =========================================================
+   PAGES — une seule visible à la fois, navigation au clic
+   (la page suivante peut être verrouillée par une question)
+========================================================= */
+.pages{
+  height: 100vh;
+  height: 100svh;
+  position: relative;
+  overflow: hidden;
+}
+
+.page{
+  height: 100vh;
+  height: 100svh;
+  width: 100%;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-2);
+  background: var(--noir);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(14px);
+  transition: opacity var(--dur-med) var(--ease-lux), transform var(--dur-med) var(--ease-lux);
+}
+.page.is-active{
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.page--dark{
+  background: radial-gradient(ellipse at 50% 30%, var(--noir-soft), var(--noir));
+}
+
+/* flèche pour avancer à la page suivante */
+.page-next{
+  position: fixed;
+  z-index: 200;
+  bottom: var(--space-2);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(198,169,107,0.4);
+  background: transparent;
+  color: var(--accent);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--dur-fast) var(--ease-lux), transform var(--dur-fast) var(--ease-lux);
+}
+.page-next:hover{ border-color: var(--accent); transform: translateX(-50%) translateY(3px); }
+.page-next--prev{
+  bottom: auto;
+  top: var(--space-2);
+}
+.page-next--prev:hover{ transform: translateX(-50%) translateY(-3px); }
+
+/* =========================================================
+   La porte — question de passage entre deux pages
+========================================================= */
+.gate{
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
+  background: rgba(10,10,11,0.92);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast) var(--ease-lux);
+}
+.gate.is-open{ opacity: 1; pointer-events: auto; }
+.gate__card{
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+.gate__eyebrow{
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.gate__question{
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+}
+.gate__options{
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+.gate__feedback{
+  min-height: 1.4em;
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--accent);
+}
+
+.page__inner{
+  width: 100%;
+  max-width: var(--max-w);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+.page__inner--center{ justify-content: center; }
+
+.eyebrow{
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.page__title{
+  font-size: clamp(2rem, 8vw, 2.8rem);
+  letter-spacing: 0.01em;
+}
+.page__hint{
+  font-size: 0.8rem;
+  color: rgba(244,241,236,0.5);
+  font-style: italic;
+  font-family: var(--font-display);
+}
+
+/* =========================================================
+   Navigation par points (une lune par page)
+========================================================= */
+.page-dots{
+  position: fixed;
+  right: var(--space-2);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.page-dot{
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid rgba(198,169,107,0.5);
+  background: transparent;
+  padding: 0;
+  transition: background var(--dur-fast) var(--ease-lux), transform var(--dur-fast) var(--ease-lux);
+}
+.page-dot.is-active{
+  background: var(--accent);
+  transform: scale(1.25);
+  box-shadow: 0 0 8px rgba(198,169,107,0.6);
+}
+.page-dot.is-locked{
+  border-color: rgba(110,111,115,0.4);
+  cursor: default;
+}
+.page-dot.is-visited:not(.is-active){
+  background: rgba(198,169,107,0.4);
+}
+
+/* =========================================================
+   Bouton musique
+========================================================= */
+.music-toggle{
+  position: fixed;
+  bottom: var(--space-2);
+  left: var(--space-2);
+  z-index: 200;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(198,169,107,0.35);
+  background: rgba(11,11,13,0.6);
+  color: var(--accent);
+  font-size: 1rem;
+}
+.music-toggle[aria-pressed="true"]{ animation: pulse 1.6s ease-in-out infinite; }
+@keyframes pulse{ 0%,100%{ opacity: 1; } 50%{ opacity: 0.4; } }
+
+/* =========================================================
+   PAGE 0 — Hero
+========================================================= */
+.hero__moon{
+  position: absolute;
+  top: 16%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle at 35% 35%, var(--ivoire), var(--ivoire) 55%, transparent 78%);
+  opacity: 0;
+  box-shadow: 0 0 50px 8px rgba(244,241,236,0.2);
+  animation: moonFade 2s var(--ease-lux) forwards;
+  animation-delay: 0.3s;
+}
+@keyframes moonFade{ to{ opacity: 0.85; } }
+
+.hero__name{
+  font-size: clamp(3rem, 18vw, 5.5rem);
+  letter-spacing: 0.06em;
+  background: linear-gradient(180deg, var(--ivoire), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0;
+  animation: lineIn var(--dur-med) var(--ease-lux) forwards;
+  animation-delay: 0.6s;
+}
+.hero__line{
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.1rem, 4vw, 1.4rem);
+  color: rgba(244,241,236,0.85);
+  opacity: 0;
+  animation: lineIn var(--dur-med) var(--ease-lux) forwards;
+}
+#heroLine1{ animation-delay: 1.4s; }
+#heroLine2{ animation-delay: 2.1s; color: var(--accent); }
+@keyframes lineIn{ from{ opacity: 0; transform: translateY(10px); } to{ opacity: 1; transform: translateY(0); } }
+
+.btn-enter{
+  margin-top: var(--space-2);
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 0.85rem 2rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: lineIn var(--dur-med) var(--ease-lux) forwards;
+  animation-delay: 2.8s;
+  transition: background var(--dur-fast) var(--ease-lux), color var(--dur-fast) var(--ease-lux);
+}
+.btn-enter:hover{ background: var(--accent); color: var(--noir); }
+
+/* =========================================================
+   PAGE 1 — "Toi" : navigation du portrait (cartes à retourner)
+========================================================= */
+.story-deck__nav, .deck-count{
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+.deck-arrow{
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(244,241,236,0.25);
+  background: transparent;
+  color: var(--ivoire);
+  font-size: 1.2rem;
+  transition: border-color var(--dur-fast) var(--ease-lux);
+}
+.deck-arrow:hover{ border-color: var(--accent); }
+.deck-count{ font-size: 0.75rem; color: rgba(244,241,236,0.5); letter-spacing: 0.1em; }
+
+/* =========================================================
+   PAGE 2 — Carrousel de souvenirs
+========================================================= */
+.carousel{
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  width: 100%;
+}
+.carousel__frame{
+  flex: 1;
+  aspect-ratio: 4/5;
+  max-height: 46vh;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  background: var(--noir-soft);
+  border: 1px solid rgba(198,169,107,0.15);
+}
+.carousel__img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.carousel__caption{
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: var(--space-1);
+  font-size: 0.75rem;
+  background: linear-gradient(0deg, rgba(11,11,13,0.85), transparent);
+}
+.carousel__arrow{
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(244,241,236,0.25);
+  background: transparent;
+  color: var(--ivoire);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.carousel__arrow:hover{ border-color: var(--accent); }
+.carousel__dots{
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: var(--space-2);
+}
+.carousel__dots .cdot{
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(244,241,236,0.25);
+}
+.carousel__dots .cdot.is-active{ background: var(--accent); }
+
+/* =========================================================
+   PAGE 3 — Carte à retourner
+========================================================= */
+.flip-card{
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 4/3;
+  perspective: 1000px;
+  margin-top: var(--space-2);
+}
+.flip-card__inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s var(--ease-lux);
+  transform-style: preserve-3d;
+}
+.flip-card.is-flipped .flip-card__inner{ transform: rotateY(180deg); }
+.flip-card__face{
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border: 1px solid rgba(198,169,107,0.3);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
+  background: linear-gradient(160deg, rgba(19,19,21,0.2), rgba(11,11,13,0.5));
+}
+.flip-card__face--front{ cursor: pointer; }
+.flip-card__face--back{
+  transform: rotateY(180deg);
+  cursor: pointer;
+}
+.flip-card__index{
+  font-family: var(--font-display);
+  color: var(--accent);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+}
+.flip-card__title{
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  margin-top: var(--space-1);
+}
+.flip-card__desc{
+  font-size: 0.95rem;
+  color: rgba(244,241,236,0.8);
+  text-align: center;
+}
+
+/* =========================================================
+   PAGE 4 — Quiz
+========================================================= */
+.quiz__options{
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+  margin-top: var(--space-2);
+}
+.quiz__option{
+  padding: 0.85rem 1rem;
+  border-radius: 6px;
+  border: 1px solid rgba(244,241,236,0.18);
+  background: transparent;
+  color: var(--ivoire);
+  font-size: 0.95rem;
+  transition: border-color var(--dur-fast) var(--ease-lux), background var(--dur-fast) var(--ease-lux);
+}
+.quiz__option:hover:not([disabled]){ border-color: var(--accent); }
+.quiz__option.is-correct{ border-color: #8FAE8B; background: rgba(143,174,139,0.12); }
+.quiz__option.is-wrong{ border-color: var(--erreur); background: rgba(138,90,74,0.18); }
+.quiz__feedback{
+  margin-top: var(--space-2);
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--accent);
+  min-height: 1.4em;
+}
+.quiz-result__score{
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  color: var(--accent);
+}
+.quiz-result__message{
+  margin-top: var(--space-1);
+  font-style: italic;
+  color: rgba(244,241,236,0.75);
+}
+
+/* =========================================================
+   PAGE 5 — Secret + lettre
+========================================================= */
+.secret__line{
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-style: italic;
+}
+.secret__line--accent{ color: var(--accent); }
+.secret__form{
+  display: flex;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.secret__input{
+  flex: 1;
+  min-width: 160px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(198,169,107,0.4);
+  color: var(--ivoire);
+  font-size: 1rem;
+  padding: 0.6rem 0.2rem;
+  text-align: center;
+  letter-spacing: 0.15em;
+  outline: none;
+}
+.secret__input:focus{ border-color: var(--accent); }
+.secret__input.is-error{ animation: shake 0.4s var(--ease-lux); border-color: var(--erreur); }
+@keyframes shake{ 0%,100%{ transform: translateX(0); } 25%{ transform: translateX(-6px); } 75%{ transform: translateX(6px); } }
+.secret__submit{
+  background: var(--erreur);
+  border: 1px solid var(--erreur);
+  color: var(--ivoire);
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.secret__submit:hover{ background: var(--erreur); }
+.secret__feedback{ min-height: 1.4em; font-style: italic; color: rgba(244,241,236,0.6); margin-top: var(--space-1); }
+.secret__feedback.is-error{ color: var(--accent); }
+
+.letter__unlock-flash{
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, var(--accent), transparent 60%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 250;
+}
+.letter__unlock-flash.is-flashing{ animation: flash 0.9s var(--ease-lux); }
+@keyframes flash{ 0%{ opacity: 0; } 15%{ opacity: 0.5; } 100%{ opacity: 0; } }
+.letter__paragraph{
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  line-height: 1.9;
+  color: rgba(244,241,236,0.9);
+  white-space: pre-line;
+}
+.letter__paragraph .word{ opacity: 0; display: inline-block; animation: wordIn var(--dur-fast) var(--ease-lux) forwards; }
+@keyframes wordIn{ to{ opacity: 1; } }
+.letter__signoff{
+  margin-top: var(--space-2);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-style: italic;
+  color: var(--accent);
+}
+.btn-ghost{
+  margin-top: var(--space-2);
+  background: transparent;
+  border: 1px solid rgba(244,241,236,0.3);
+  color: var(--ivoire);
+  padding: 0.65rem 1.6rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.btn-ghost:hover{ border-color: var(--accent); color: var(--accent); }
+
+/* =========================================================
+   PAGE 6 — Twist + compte à rebours
+========================================================= */
+.twist__line{
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-style: italic;
+  opacity: 0;
+  margin-top: var(--space-2);
+}
+.twist__line--whisper{ font-size: 1rem; color: rgba(198,169,107,0.75); }
+.js-line-in{ animation: lineIn var(--dur-med) var(--ease-lux) forwards; }
+.twist__time{
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 12vw, 3.6rem);
+  color: var(--accent);
+}
+.countdown{ display: flex; gap: var(--space-2); margin-top: var(--space-2); }
+.countdown__unit{ display: flex; flex-direction: column; align-items: center; min-width: 56px; }
+.countdown__unit span{ font-family: var(--font-display); font-size: 1.8rem; }
+.countdown__unit small{ font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(244,241,236,0.5); }
+.countdown__done{ margin-top: var(--space-2); font-family: var(--font-display); font-style: italic; color: var(--accent); font-size: 1.2rem; }
+
+/* =========================================================
+   Focus visible
+========================================================= */
+a:focus-visible, button:focus-visible, input:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
