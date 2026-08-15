@@ -81,24 +81,7 @@ const SITE_DATA = {
      Sépare les paragraphes par une ligne vide.
   --------------------------------------------------------- */
   letter: `
-Mon Cavé,
-Aujourd’hui est une journée particulière, parce qu’elle marque la naissance d’une personne qui a profondément marqué ma vie.
-Je pourrais simplement te dire « joyeux anniversaire », mais tu me connais assez pour savoir que je veux te dire davantage.
-Je veux d’abord te dire merci. Merci pour la personne que tu es, avec tes qualités, tes défauts, tes doutes et tes combats. J’ai toujours eu l’impression qu’il y avait en toi quelque chose de profondément humain : un cœur qui a beaucoup vécu, beaucoup encaissé, mais qui continue malgré tout à avancer.
-Je me rappelle t’avoir dit de prendre mes distances avec toi, et pourtant je ne l’ai pas fait. Je me suis attachée à toi, parce qu’au-delà de ce que je voyais, j’ai découvert un cœur que j’ai appris à comprendre avec le temps.
-J’ai aussi vu ton ambition et ton envie de devenir quelqu’un, de construire quelque chose et de laisser une trace. Alors, pour cette nouvelle année, je te souhaite la discipline, la sagesse et la force nécessaires pour aller au bout de tes rêves. Je te souhaite aussi de guérir de tout ce que tu portes encore en silence.
-Je ne sais pas ce que l’avenir nous réserve, mais je suis reconnaissante que nos chemins se soient croisés. Peu importe les difficultés ou les incompréhensions, aujourd’hui je veux simplement célébrer **toi**.
-L’homme que tu es aujourd’hui, mais surtout celui que tu es encore en train de devenir.
-Alors avance, travaille, grandis, apprends. Tombe s’il le faut, mais relève-toi toujours. Et surtout, ne deviens jamais quelqu’un d’autre pour être accepté. Deviens simplement une meilleure version de toi-même.
-
-Joyeux anniversaire, Cavé. ❤️
-
-Que cette nouvelle année t’apporte la paix, les opportunités, la réussite et la maturité nécessaires pour construire la vie dont tu rêves.
-
-Continue de rêver grand. ❤️
-
-Avec toute mon affection,
-MAem`,
+Tu es ma personne preferee`,
 
   /* ---------------------------------------------------------
      BONUS — photos ajoutées après la soirée d'anniversaire
