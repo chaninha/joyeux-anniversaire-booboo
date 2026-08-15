@@ -81,7 +81,7 @@ const SITE_DATA = {
      Sépare les paragraphes par une ligne vide.
   --------------------------------------------------------- */
   letter: `
-Tu es ma personne preferee`,
+Tu es ma personne préférée`,
 
   /* ---------------------------------------------------------
      BONUS — photos ajoutées après la soirée d'anniversaire
